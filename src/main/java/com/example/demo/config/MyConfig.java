@@ -45,7 +45,7 @@ public class MyConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/Admin/**").authenticated()
                 .requestMatchers("/user/**").authenticated()
-                .requestMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
+                .requestMatchers("/**").permitAll().and().formLogin().loginPage("/signin").and().csrf().disable();
 
         return http.build();
     }

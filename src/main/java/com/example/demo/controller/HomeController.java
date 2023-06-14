@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,8 @@ public class HomeController {
 
 	@PostMapping("/do_register")
 	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result,
+
+
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
 			HttpSession session) {
 		try {
@@ -75,5 +78,12 @@ public class HomeController {
 		}
 
 		return "signup.html";
+	}
+
+
+	@GetMapping("/signin")
+	public String customLogin(Model model) {
+		model.addAttribute("title", "Login page");
+		return "login.html";
 	}
 }
