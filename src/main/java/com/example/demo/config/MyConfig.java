@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -40,13 +42,11 @@ public class MyConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf().disable()
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("USER")
-                        .anyRequest().authenticated())
-                .httpBasic();
+        http.authorizeHttpRequests()
+                .requestMatchers("/Admin/**").authenticated()
+                .requestMatchers("/user/**").authenticated()
+                .requestMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
 
-        
         return http.build();
     }
 }
